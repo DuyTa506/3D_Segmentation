@@ -1,0 +1,10 @@
+#pytorch 1.13 with cu11.6 (this is need)
+monai
+matplotlib
+lightning==2.0
+einops
+nilearn
+nibabel
+opendatasets
+skimage
+csv
