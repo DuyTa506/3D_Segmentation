@@ -9,6 +9,7 @@ from dataset.utils import get_loader
 import pytorch_lightning as pl
 import torch
 import monai
+from monai.networks import net
 torch.set_float32_matmul_precision('medium')
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -40,7 +41,7 @@ print("Done initialize dataloader !! ")
 
 model_type = args.model_type
 if model_type == 'UNet': 
-    model = monai.networks.nets.UNet(
+    model = nets.UNet(
         spatial_dims=3,
         in_channels=4,
         out_channels=3,
@@ -49,7 +50,7 @@ if model_type == 'UNet':
         num_res_units=2,
     )
 elif model_type == 'SwinUNet':
-    model = SwinUNETR(
+    model = net.SwinUNETR(
     img_size=roi,
     in_channels=4,
     out_channels=3,
@@ -60,7 +61,7 @@ elif model_type == 'SwinUNet':
     use_checkpoint=True,
 )
 elif model_type == 'SegResNet':
-    model = SegResNet(
+    model = net.SegResNet(
     blocks_down=[1, 2, 2, 4],
     blocks_up=[1, 1, 1],
     init_filters=16,
@@ -69,7 +70,7 @@ elif model_type == 'SegResNet':
     dropout_prob=0.2,
 )
 elif model_type == 'UNETR':
-    model = UNETR(
+    model = net.UNETR(
     in_channels=4,
     out_channels=3,
     img_size=roi,
